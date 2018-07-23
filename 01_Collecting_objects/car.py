@@ -116,3 +116,30 @@ class Car(object):
     def __add__(self, other): # Overrides default function
         print('Adding two cars is an invalid operation!')
         return None
+
+    
+if __name__ == "__main__":
+    import numpy as np
+    
+    world = np.zeros((4, 6))
+    alan_car = Car([0, 0], [0, 1], world, 'm')
+    bruce_car = Car([3, 3], [-2, 1], world, 'w')
+    carla_car = Car([2, 4], [0, -1], world, 'r')
+    
+    # You can see that they all point to the same address
+    print(Car.all_the_cars)
+    print(alan_car.all_the_cars)
+    print(bruce_car.all_the_cars)
+    print(carla_car.all_the_cars)
+
+    # Remove indivdual cars
+    # Attempt 1
+    del alan_car
+    # Car.all_the_cars['car_1'] is gone
+    print(dict(Car.all_the_cars))
+    
+    # Attempt 2
+    print({key: item for key, item in Car.all_the_cars.items()})
+    del bruce_car
+    print(dict(Car.all_the_cars)) # Appears to work. But did not work in Jupyter notebook
+    

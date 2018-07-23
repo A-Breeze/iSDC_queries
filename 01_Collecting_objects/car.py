@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import weakref
 
 """ The Car class defines a car's movement and keeps track of its state.
 
@@ -13,7 +14,7 @@ import matplotlib.pyplot as plt
 
 class Car(object):
     
-    all_the_cars = dict() # Static attribute to keep track of cars
+    all_the_cars = weakref.WeakValueDictionary() # Static attribute to keep track of cars
     
     def __init__(self, position, velocity, world, color = 'r'):
         """Initializes Car with some position, velocity, and a world to traverse."""
@@ -28,9 +29,11 @@ class Car(object):
         self.id = 'car_' + str(len(self.all_the_cars) + 1)
         self.all_the_cars[self.id] = self
 
-    def __del__(self):
-        del self.all_the_cars[self.id]
-        
+    #def __del__(self):
+    #    del self.all_the_cars[self.id]
+    # Almost never a good idea to use __del__ 
+    # as per: https://stackoverflow.com/questions/1481488/what-is-the-del-method-how-to-call-it
+    
     def move(self, dt=1):
         """ The move function moves the car in the direction of the velocity and 
             updates the state.
